@@ -3,166 +3,231 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="GLP-1 복용자의 식사 불편 경험과 간편식 해결방식 반응을 확인하는 웹 MVP 데모" />
   <title>GLP-1 식사 부담 확인 MVP</title>
-  <link rel="stylesheet" href="css/style.css">
-
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <main class="app">
-    <div class="shell">
-      <div class="topbar">
-        <div class="brand">GLP-1 식사 부담 확인 MVP</div>
-        <div id="stepText">1 / 4</div>
+  <div class="site-shell">
+    <header class="pc-header" aria-label="주요 메뉴">
+      <a class="brand" href="#" id="brandLink">GLP-1 식사 부담 확인 MVP</a>
+      <nav class="pc-nav">
+        <button class="nav-link active" type="button" data-nav="home">홈</button>
+        <button class="nav-link" type="button" data-nav="experience">체험하기</button>
+        <button class="nav-link" type="button" data-nav="result" id="pcResultNav" disabled>결과</button>
+      </nav>
+    </header>
+
+    <header class="mobile-appbar" aria-label="모바일 상단 앱바">
+      <button class="icon-btn back-btn" id="mobileBackBtn" type="button" aria-label="뒤로 가기" hidden>←</button>
+      <div class="mobile-title" id="mobileTitle">GLP-1 식사 부담 확인 MVP</div>
+      <div class="mobile-spacer" aria-hidden="true"></div>
+    </header>
+
+    <main class="main-content">
+      <div class="flow-meta">
+        <div class="step-label" id="stepText">시작</div>
+        <div class="progress" aria-label="진행 상태"><span id="progressBar"></span></div>
       </div>
-      <div class="progress"><span id="progressBar"></span></div>
 
-      <section id="screen-start" class="card">
-        <span class="demo">브라우저 데모</span>
-        <h1>GLP-1 복용 중 식사할 때<br>불편한 점을 확인해보세요.</h1>
-        <p class="muted">
-          식사 경험을 입력하면, 제공된 자료와 입력 내용을 바탕으로
-          위장 부담을 최소화한 간편식 방향을 정리해 보여드립니다.
-        </p>
-        <div class="state warning">
-          <strong>[후보3 · 미검증 가설 · 추가 검증 필요]</strong><br>
-          이 MVP는 현재 가설을 검증하기 위한 데모이며, 특정 원인·안전성·효과를 확정하지 않습니다.
+      <section id="screen-start" class="screen home-screen">
+        <div class="hero-copy">
+          <span class="demo">브라우저 데모</span>
+          <p class="eyebrow">GLP-1 복용자의 식사 경험 확인</p>
+          <h1>먹는 것마다 부담스러울 때,<br />지금의 식사 경험을 먼저 확인해보세요.</h1>
+          <p class="hero-description">
+            식사 불편과 먹기 어려운 음식을 입력하면, 제공된 자료 범위에서
+            위장 부담을 최소화한 간편식 방향을 데모로 정리해드립니다.
+          </p>
+          <div class="hero-actions">
+            <button class="btn-primary btn-large" id="startBtn" type="button">식사 경험 입력하기</button>
+          </div>
+          <div class="state warning compact-note">
+            <strong>[후보3 · 미검증 가설 · 추가 검증 필요]</strong>
+            <span>이 MVP는 가설 검증용 데모이며 특정 원인·안전성·효과를 확정하지 않습니다.</span>
+          </div>
         </div>
-        <div class="actions">
-          <button class="btn-primary" id="startBtn">시작하기</button>
+        <div class="hero-example" aria-label="서비스 예시">
+          <div class="example-label">결과 예시</div>
+          <div class="example-card">
+            <div class="example-title">식사 불편 요약</div>
+            <div class="example-line short"></div>
+            <div class="example-line"></div>
+            <div class="example-title second">간편식 방향</div>
+            <div class="example-chip-row"><span></span><span></span><span></span></div>
+            <div class="example-line"></div>
+          </div>
         </div>
       </section>
 
-      <section id="screen-input" class="card" hidden>
-        <span class="demo">1. 식사 불편 경험 입력</span>
-        <h2>현재 식사 상황을 알려주세요.</h2>
-        <p class="muted">직접 경험한 범위에서만 입력해주세요.</p>
-
-        <div class="grid">
-          <div>
-            <label for="medicine">복용 약물</label>
-            <select id="medicine">
-              <option value="">선택해주세요</option>
-              <option>마운자로</option>
-              <option>위고비</option>
-              <option>삭센다</option>
-              <option>기타 GLP-1 계열</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="period">투약 초기(4~6주) 여부</label>
-            <select id="period">
-              <option value="">선택해주세요</option>
-              <option>예</option>
-              <option>아니오</option>
-              <option>잘 모르겠음</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="discomfort">현재 식사 때 느끼는 불편</label>
-            <textarea id="discomfort" placeholder="예: 먹고 나면 속이 불편하고, 평소 먹던 음식을 고르기 어렵다."></textarea>
-          </div>
-
-          <div>
-            <label for="foods">먹기 어려운 음식</label>
-            <textarea id="foods" placeholder="예: 기름진 음식, 한 번에 많이 먹는 음식 등"></textarea>
-          </div>
-
-          <div>
-            <label for="digestive">소화효소제 사용 경험</label>
-            <select id="digestive">
-              <option value="">선택해주세요</option>
-              <option>사용한 적 있음</option>
-              <option>사용한 적 없음</option>
-              <option>잘 모르겠음</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="afterUse">소화효소제 사용 후에도 식사가 불편했는지</label>
-            <select id="afterUse">
-              <option value="">선택해주세요</option>
-              <option>여전히 불편했음</option>
-              <option>덜 불편했음</option>
-              <option>사용하지 않아 해당 없음</option>
-              <option>잘 모르겠음</option>
-            </select>
-          </div>
-
-          <label class="checkbox">
-            <input type="checkbox" id="consent">
-            <span>입력한 내용을 <strong>식사 불편 확인 및 MVP 검증</strong> 목적으로 처리하는 데 동의합니다. 민감한 개인정보나 의료기록은 입력하지 마세요.</span>
-          </label>
+      <section id="screen-input" class="screen" hidden>
+        <div class="screen-header">
+          <span class="demo">식사 불편 경험 입력</span>
+          <h2>현재 식사 상황을 알려주세요.</h2>
+          <p class="muted">직접 경험한 범위에서만 입력해주세요.</p>
         </div>
 
-        <div class="actions">
-          <button class="btn-secondary" id="backToStartBtn">이전</button>
-          <button class="btn-primary" id="generateBtn" disabled>AI 결과 확인</button>
-        </div>
-      </section>
+        <div class="input-layout">
+          <form class="input-panel" id="inputForm" novalidate>
+            <div class="form-group">
+              <label for="medicine">복용 약물</label>
+              <select id="medicine" required>
+                <option value="">선택해주세요</option>
+                <option>마운자로</option>
+                <option>위고비</option>
+                <option>삭센다</option>
+                <option>기타 GLP-1 계열</option>
+              </select>
+            </div>
 
-      <section id="screen-result" class="card" hidden>
-        <span class="demo">2. AI 식사 방향 결과 · 데모</span>
-        <h2>입력 내용을 이렇게 정리했습니다.</h2>
+            <div class="form-group">
+              <label for="period">투약 초기(4~6주) 여부</label>
+              <select id="period" required>
+                <option value="">선택해주세요</option>
+                <option>예</option>
+                <option>아니오</option>
+                <option>잘 모르겠음</option>
+              </select>
+            </div>
 
-        <div class="result-box">
-          <div class="result-title">식사 불편 요약</div>
-          <div id="summary" class="summary"></div>
-        </div>
+            <div class="form-group full">
+              <label for="discomfort">현재 식사 때 느끼는 불편</label>
+              <textarea id="discomfort" required placeholder="예: 먹고 나면 속이 불편하고, 평소 먹던 음식을 고르기 어렵다."></textarea>
+            </div>
 
-        <div class="result-box">
-          <div class="result-title">간편식 방향</div>
-          <p id="mealDirection"></p>
-          <ul class="bullets">
-            <li>식사량을 한 번에 크게 잡기보다 부담을 줄이는 방향으로 구성</li>
-            <li>고지방·과식 상황을 피하고 소량씩 천천히 섭취하는 방향을 고려</li>
-            <li>사용자가 입력한 음식 제한을 반영해 선택 부담을 줄이는 방향</li>
-          </ul>
-        </div>
+            <div class="form-group full">
+              <label for="foods">먹기 어려운 음식</label>
+              <textarea id="foods" required placeholder="예: 기름진 음식, 한 번에 많이 먹는 음식 등"></textarea>
+            </div>
 
-        <div class="state warning">
-          <strong>[미검증 가설 · 추가 검증 필요]</strong><br>
-          위 결과는 사용자의 입력과 MVP에 사전 제공된 배경자료를 바탕으로 한 데모 정리입니다.
-          특정 식품의 안전성·치료효과나 증상의 원인을 판단하지 않습니다.
-        </div>
+            <div class="form-group">
+              <label for="digestive">소화효소제 사용 경험</label>
+              <select id="digestive" required>
+                <option value="">선택해주세요</option>
+                <option>사용한 적 있음</option>
+                <option>사용한 적 없음</option>
+                <option>잘 모르겠음</option>
+              </select>
+            </div>
 
-        <div class="actions">
-          <button class="btn-secondary" id="backToInputBtn">입력 수정</button>
-          <button class="btn-primary" id="feedbackStartBtn">해결방식 반응 선택</button>
+            <div class="form-group">
+              <label for="afterUse">소화효소제 사용 후에도 식사가 불편했는지</label>
+              <select id="afterUse" required>
+                <option value="">선택해주세요</option>
+                <option>여전히 불편했음</option>
+                <option>덜 불편했음</option>
+                <option>사용하지 않아 해당 없음</option>
+                <option>잘 모르겠음</option>
+              </select>
+            </div>
+
+            <div class="consent-box full">
+              <label class="checkbox-label">
+                <input type="checkbox" id="consent" />
+                <span>입력한 내용을 <strong>식사 불편 확인 및 MVP 검증</strong> 목적으로 처리하는 데 동의합니다. 민감한 개인정보나 의료기록은 입력하지 마세요.</span>
+              </label>
+            </div>
+
+            <div id="inputError" class="state danger full" hidden></div>
+
+            <div class="actions full">
+              <button class="btn-secondary" id="backToStartBtn" type="button">이전</button>
+              <button class="btn-primary" id="generateBtn" type="submit" disabled>AI 결과 확인</button>
+            </div>
+          </form>
         </div>
       </section>
 
-      <section id="screen-feedback" class="card" hidden>
-        <span class="demo">3. 해결방식 반응 수집</span>
-        <h2>이런 간편식 방향이 도움이 될 것 같나요?</h2>
-        <p class="muted">이번 선택은 제품 가설에 대한 초기 반응을 확인하기 위한 것입니다.</p>
-
-        <div class="feedback-grid">
-          <button class="feedback-btn" data-feedback="도움이 될 것 같다">도움이 될 것 같다</button>
-          <button class="feedback-btn" data-feedback="별로 도움이 되지 않을 것 같다">별로 도움이 되지 않을 것 같다</button>
+      <section id="screen-result" class="screen" hidden>
+        <div class="screen-header">
+          <span class="demo">AI 식사 방향 결과 · 데모</span>
+          <h2>입력 내용을 이렇게 정리했습니다.</h2>
+          <p class="muted">사용자 경험과 사전 제공된 자료 범위에서만 정리한 결과입니다.</p>
         </div>
 
-        <div id="feedbackMessage" class="state success" hidden>
-          선택이 기록되었습니다. **[미검증 가설 · 추가 검증 필요]** 상태는 유지됩니다.
+        <div class="result-layout">
+          <div class="result-main">
+            <article class="result-box">
+              <div class="result-title">식사 불편 요약</div>
+              <div id="summary" class="summary"></div>
+            </article>
+
+            <article class="result-box">
+              <div class="result-title">간편식 방향</div>
+              <p id="mealDirection"></p>
+              <ul class="bullets">
+                <li>식사량을 한 번에 크게 잡기보다 부담을 줄이는 방향으로 구성</li>
+                <li>고지방·과식 상황을 피하고 소량씩 천천히 섭취하는 방향을 고려</li>
+                <li>사용자가 입력한 음식 제한을 반영해 선택 부담을 줄이는 방향</li>
+              </ul>
+            </article>
+
+            <div class="state warning">
+              <strong>[미검증 가설 · 추가 검증 필요]</strong><br />
+              위 결과는 사용자의 입력과 MVP에 사전 제공된 배경자료를 바탕으로 한 데모 정리입니다. 특정 식품의 안전성·치료효과나 증상의 원인을 판단하지 않습니다.
+            </div>
+          </div>
+
+          <aside class="source-note">
+            <div class="source-title">참고 범위</div>
+            <p>한국소비자원·공정거래위원회 소비자안전주의보(2026.7.2)</p>
+            <p>국회 서미화 의원실·건강보험심사평가원·식품의약품안전처 자료(2025.9.2 공개)</p>
+            <p>식약처 「GLP-1 계열 비만치료제 안전사용 안내서」(2025.9.29)</p>
+            <small>모두 배경 근거이며 후보3의 직접 근거는 아닙니다.</small>
+          </aside>
         </div>
 
-        <div class="state warning">
-          현재 MVP에서는 실제 간편식 주문·결제, 정기구독, 개인별 의료 처방을 제공하지 않습니다.
-        </div>
-
-        <div class="actions">
-          <button class="btn-secondary" id="backToResultBtn">결과로 돌아가기</button>
+        <div class="actions result-actions">
+          <button class="btn-secondary" id="backToInputBtn" type="button">입력 수정</button>
+          <button class="btn-primary" id="feedbackStartBtn" type="button">해결방식 반응 선택</button>
         </div>
       </section>
 
-      <div class="footer-note">
-        이 페이지는 별도 API 없이 실행되는 규칙 기반 데모입니다. 실제 AI 판단이나 의료적 판단을 제공하지 않습니다.
-      </div>
-    </div>
-  </main>
+      <section id="screen-feedback" class="screen" hidden>
+        <div class="screen-header narrow">
+          <span class="demo">해결방식 반응 수집</span>
+          <h2>이런 간편식 방향이 도움이 될 것 같나요?</h2>
+          <p class="muted">이번 선택은 제품 가설에 대한 초기 반응을 확인하기 위한 것입니다.</p>
+        </div>
+
+        <div class="feedback-box">
+          <div class="feedback-grid">
+            <button class="feedback-btn" data-feedback="도움이 될 것 같다" type="button">
+              <span class="feedback-icon">✓</span>
+              <span>도움이 될 것 같다</span>
+            </button>
+            <button class="feedback-btn" data-feedback="별로 도움이 되지 않을 것 같다" type="button">
+              <span class="feedback-icon">–</span>
+              <span>별로 도움이 되지 않을 것 같다</span>
+            </button>
+          </div>
+
+          <div id="feedbackMessage" class="state success" hidden></div>
+
+          <div class="state warning">
+            현재 MVP에서는 실제 간편식 주문·결제, 정기구독, 개인별 의료 처방을 제공하지 않습니다.
+          </div>
+        </div>
+
+        <div class="actions result-actions">
+          <button class="btn-secondary" id="backToResultBtn" type="button">결과로 돌아가기</button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="mobile-bottom-nav" aria-label="모바일 주요 메뉴">
+      <button type="button" class="bottom-nav-item active" data-nav="home">
+        <span class="bottom-icon">⌂</span><span>홈</span>
+      </button>
+      <button type="button" class="bottom-nav-item" data-nav="experience">
+        <span class="bottom-icon">＋</span><span>체험하기</span>
+      </button>
+      <button type="button" class="bottom-nav-item" data-nav="result" id="mobileResultNav" disabled>
+        <span class="bottom-icon">▤</span><span>결과</span>
+      </button>
+    </nav>
+  </div>
 
   <script src="js/script.js"></script>
-
 </body>
 </html>
